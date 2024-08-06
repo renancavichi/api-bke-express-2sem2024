@@ -1,9 +1,12 @@
 # Comandos Uteis
 
-### Node
+### Node e NPM
 
 ```
 node -v
+npm init 
+npm start
+npm run [nome do script] 
 ```
 
 ### Git
