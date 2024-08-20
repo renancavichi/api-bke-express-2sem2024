@@ -9,5 +9,5 @@ app.use('/auth', authRouter)
 app.use('/account', accountRouter)
 
 app.listen(PORT, () => {
-    console.log(`Servidor Rodando no ambiente ${ENVIRONMENT} em ${HOST}:${PORT}`)
+    console.log(`Servidor Rodando no ambiente ${ENVIRONMENT} em ${ ENVIRONMENT == 'production' ? HOST : HOST+':'+PORT }`)
 })
