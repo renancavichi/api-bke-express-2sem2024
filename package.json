@@ -7,9 +7,12 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --env-file=.env --watch src/server.js",
-    "prisma:pull": "npx prisma db pull",
-    "prisma:push": "npx prisma db push",
-    "prisma:generate": "npx prisma generate"
+    "prisma:pull": "npx prisma db pull --schema=./prisma/schema-production.prisma",
+    "prisma:push": "npx prisma db push --schema=./prisma/schema-production.prisma",
+    "prisma:generate": "npx prisma generate --schema=./prisma/schema-production.prisma",
+    "prisma:local:pull": "npx prisma db pull --schema=./prisma/schema-local.prisma",
+    "prisma:local:push": "npx prisma db push --schema=./prisma/schema-local.prisma",
+    "prisma:local:generate": "npx prisma generate --schema=./prisma/schema-local.prisma"
   },
   "repository": {
     "type": "git",
