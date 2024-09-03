@@ -22,3 +22,21 @@ export const create = async (account) => {
     return result
 }
 
+export const deleteAccount = async (id) => {
+    const account = await prisma.account.delete({
+        where: {
+            id
+        }
+    })
+    return account
+}
+
+export const update = async (account) => {
+    const result = await prisma.account.update({
+        data: account,
+        where:{
+           id: account.id 
+        }
+    })
+    return result
+}
