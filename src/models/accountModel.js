@@ -15,3 +15,10 @@ export const getByIdAccount = async (id) => {
     return account
 }
 
+export const create = async (account) => {
+    const result = await prisma.account.create({
+        data: account
+    })
+    return result
+}
+
