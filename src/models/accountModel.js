@@ -25,7 +25,7 @@ export const create = async (account) => {
 export const deleteAccount = async (id) => {
     const account = await prisma.account.delete({
         where: {
-            id
+            id: id
         }
     })
     return account
