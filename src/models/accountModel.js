@@ -17,6 +17,20 @@ export const accountValidateToCreate = (account) => {
     return partialAccountSchema.safeParse(account)
 }
 
+export const accountValidateToUpdate = (account) => {
+    return accountSchema.safeParse(account)
+}
+
+export const accountValidateId = (id) => {
+    const partialAccountSchema = accountSchema.partial({
+        service: true,
+        username: true,
+        pass: true,
+        user_id: true
+    })
+    return partialAccountSchema.safeParse({id})
+}
+
 export const listAccounts = async () => {
     const accounts = await prisma.account.findMany({
         orderBy: {
