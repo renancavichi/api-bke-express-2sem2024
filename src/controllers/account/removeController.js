@@ -1,9 +1,17 @@
-import { deleteAccount } from "../../models/accountModel.js"
+import { deleteAccount, accountValidateId } from "../../models/accountModel.js"
 
 const remove = async (req, res, next) => {
     const {id} = req.params
     try{
-        const account = await deleteAccount(+id)
+        const accountValidated = accountValidateId(+id)
+
+        if(accountValidated?.error)
+            return res.status(401).json({
+                error: "Erro ao deletar um serviço!",
+                fieldErrors: accountValidated.error.flatten().fieldErrors
+            })
+
+        const account = await deleteAccount(accountValidated.data.id)
 
         return res.json({
             success: "Conta removida com sucesso!",
