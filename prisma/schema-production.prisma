@@ -20,9 +20,11 @@ model account {
 }
 
 model user {
-  id    Int    @id @default(autoincrement())
-  name  String @db.VarChar(100)
-  email String @unique(map: "email_UNIQUE") @db.VarChar(200)
-  pass  String @db.VarChar(256)
-  account account[]
+  id        Int       @id @default(autoincrement())
+  public_id String  @unique @db.VarChar(256)
+  name      String    @db.VarChar(100)
+  email     String    @unique @db.VarChar(200)
+  pass      String    @db.VarChar(256)
+  avatar    String?   @db.VarChar(1000)
+  account   account[]
 }
