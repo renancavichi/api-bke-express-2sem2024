@@ -45,10 +45,24 @@ export const userValidateToCreate = (account) => {
     return partialAccountSchema.safeParse(account)
 }
 
+export const userValidateToLogin = (account) => {
+    const partialAccountSchema = accountSchema.partial({id: true, public_id: true, avatar: true, name: true})
+    return partialAccountSchema.safeParse(account)
+}
+
 export const getByPublicId = async (public_id) => {
     const user = await prisma.user.findUnique({
         where: {
             public_id
+        }
+    })
+    return user
+}
+
+export const getByEmail = async (email) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            email
         }
     })
     return user

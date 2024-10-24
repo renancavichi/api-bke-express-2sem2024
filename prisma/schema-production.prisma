@@ -11,7 +11,7 @@ model account {
   id         Int     @id @default(autoincrement())
   service    String  @db.VarChar(255)
   username   String  @db.VarChar(255)
-  logo_image String? @db.VarChar(1000)
+  logo_image String? @db.VarChar(700)
   pass       String  @db.VarChar(500)
   user_id    Int
   user       user    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "account_ibfk_1")
@@ -21,10 +21,19 @@ model account {
 
 model user {
   id        Int       @id @default(autoincrement())
-  public_id String  @unique @db.VarChar(256)
+  public_id String    @unique @db.VarChar(256)
   name      String    @db.VarChar(100)
   email     String    @unique @db.VarChar(200)
   pass      String    @db.VarChar(256)
-  avatar    String?   @db.VarChar(1000)
+  avatar    String?   @db.VarChar(700)
   account   account[]
+  session   session[]
+}
+
+model session {
+  id         Int      @id @default(autoincrement())
+  token      String   @unique @db.VarChar(700)
+  user_id    Int
+  updated_at DateTime @updatedAt
+  user       user     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
