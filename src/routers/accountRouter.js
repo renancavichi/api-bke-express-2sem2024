@@ -4,10 +4,11 @@ import getByIdController from '../controllers/account/getByIdController.js'
 import listController from '../controllers/account/listController.js'
 import updateController from '../controllers/account/updateController.js'
 import removeController from '../controllers/account/removeController.js'
+import { auth } from '../middlewares/auth.js'
 
 const router = express.Router()
 
-router.post('/', createController)
+router.post('/', auth, createController)
 router.get('/list', listController)
 router.get('/:id', getByIdController)
 router.put('/:id', updateController)
