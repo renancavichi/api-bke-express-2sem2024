@@ -8,7 +8,8 @@ import { auth } from '../middlewares/auth.js'
 
 const router = express.Router()
 
-router.post('/', auth, createController)
+router.use(auth)
+router.post('/', createController)
 router.get('/list', listController)
 router.get('/:id', getByIdController)
 router.put('/:id', updateController)

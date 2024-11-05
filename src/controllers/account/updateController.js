@@ -1,4 +1,5 @@
 import { update, accountValidateToUpdate } from "../../models/accountModel.js"
+import { getByPublicId } from '../../models/userModel.js'
 
 const updateController = async (req, res, next) => {
     const {id} = req.params
@@ -14,7 +15,16 @@ const updateController = async (req, res, next) => {
                 fieldErrors: accountValidated.error.flatten().fieldErrors
             })
 
-        const result = await update(accountValidated.data)
+        const user = await getByPublicId(req.userLogged.public_id)
+
+        if(!user)
+            return res.status(401).json({
+                error: "Public ID Inválido!"
+            })
+
+        accountValidated.data.user_id = user.id
+
+        const result = await update(accountValidated.data, req.userLogged.public_id)
 
         if(!result)
             return res.status(401).json({

@@ -59,6 +59,15 @@ export const getByPublicId = async (public_id) => {
     return user
 }
 
+export const getById = async (id) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            id
+        }
+    })
+    return user
+}
+
 export const getByEmail = async (email) => {
     const user = await prisma.user.findUnique({
         where: {

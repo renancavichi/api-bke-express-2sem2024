@@ -13,7 +13,7 @@ const getById = async (req, res, next) => {
                 fieldErrors: accountValidated.error.flatten().fieldErrors
             })
 
-        const account = await getByIdAccount(accountValidated.data.id)
+        const account = await getByIdAccount(accountValidated.data.id, req.userLogged.public_id)
 
         if(!account)
             return res.status(404).json({

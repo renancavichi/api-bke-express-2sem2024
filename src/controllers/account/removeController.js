@@ -11,7 +11,7 @@ const remove = async (req, res, next) => {
                 fieldErrors: accountValidated.error.flatten().fieldErrors
             })
 
-        const account = await deleteAccount(accountValidated.data.id)
+        const account = await deleteAccount(accountValidated.data.id, req.userLogged.public_id)
 
         return res.json({
             success: "Conta removida com sucesso!",

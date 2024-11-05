@@ -21,6 +21,27 @@ export const deleteByToken = async (token) => {
     return result
 }
 
+export const getSessionByToken = async (token) => {
+    const result = await prisma.session.findUnique({
+        where: {
+            token
+        }
+    })
+    return result
+}
+
+export const updateToken = async (oldToken, newToken) => {
+    const result = await prisma.session.update({
+        data: {
+            token: newToken
+        },
+        where: {
+            token: oldToken
+        }
+    })
+    return result
+}
+
 // export const getByEmail = async (email) => {
 //     const user = await prisma.user.findUnique({
 //         where: {

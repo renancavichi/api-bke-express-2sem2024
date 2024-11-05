@@ -1,4 +1,5 @@
 import { create, accountValidateToCreate } from "../../models/accountModel.js"
+import { getByPublicId } from "../../models/userModel.js" 
 
 const createController = async (req, res, next) => {
     try{
@@ -12,6 +13,14 @@ const createController = async (req, res, next) => {
                 fieldErrors: accountValidated.error.flatten().fieldErrors
             })
 
+        const user = await getByPublicId(req.userLogged.public_id)
+
+        if(!user)
+            return res.status(401).json({
+                error: "Public ID Inválido!"
+            })
+
+        accountValidated.data.user_id = user.id
         const result = await create(accountValidated.data)
 
         if(!result)

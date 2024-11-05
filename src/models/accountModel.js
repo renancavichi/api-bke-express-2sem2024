@@ -42,12 +42,13 @@ const accountSchema = z.object({
 })
 
 export const accountValidateToCreate = (account) => {
-    const partialAccountSchema = accountSchema.partial({id: true})
+    const partialAccountSchema = accountSchema.partial({id: true, user_id: true})
     return partialAccountSchema.safeParse(account)
 }
 
 export const accountValidateToUpdate = (account) => {
-    return accountSchema.safeParse(account)
+    const partialAccountSchema = accountSchema.partial({user_id: true})
+    return partialAccountSchema.safeParse(account)
 }
 
 export const accountValidateId = (id) => {
@@ -60,19 +61,27 @@ export const accountValidateId = (id) => {
     return partialAccountSchema.safeParse({id})
 }
 
-export const listAccounts = async () => {
+export const listAccounts = async (public_id) => {
     const accounts = await prisma.account.findMany({
         orderBy: {
             id: 'desc'
+        },
+        where: {
+            user: {
+                public_id
+            }
         }
     })
     return accounts
 }
 
-export const getByIdAccount = async (id) => {
+export const getByIdAccount = async (id, public_id) => {
     const account = await prisma.account.findUnique({
         where: {
-            id
+            id,
+            user:{
+                public_id
+            }
         }
     })
     return account
@@ -85,20 +94,26 @@ export const create = async (account) => {
     return result
 }
 
-export const deleteAccount = async (id) => {
+export const deleteAccount = async (id, public_id) => {
     const account = await prisma.account.delete({
         where: {
-            id: id
+            id: id,
+            user:{
+                public_id
+            }
         }
     })
     return account
 }
 
-export const update = async (account) => {
+export const update = async (account, public_id) => {
     const result = await prisma.account.update({
         data: account,
         where:{
-           id: account.id 
+           id: account.id,
+           user:{
+            public_id
+           } 
         }
     })
     return result

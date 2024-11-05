@@ -15,12 +15,11 @@ export const auth = (req, res, next) => {
     try{
         const result = jwt.verify(accessToken, SECRET_KEY)
 
-        //continuar
-        console.log(result)
+        req.userLogged = {public_id: result.public_id, name: result.name}
     } catch(error)
     {
         if(error?.name === 'TokenExpiredError')
-            return res.status(403).json({error: "Não Autorizado, AccessToken Expirado!"})
+            return res.status(401).json({error: "Não Autorizado, AccessToken Expirado!", errorType: "tokenExpired"})
 
         if(error?.name === 'JsonWebTokenError')
             return res.status(403).json({error: "Não Autorizado, AccessToken Inválido!"})
